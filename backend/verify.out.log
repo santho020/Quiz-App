@@ -1,0 +1,12 @@
+
+> quiz-app-backend@1.0.0 start
+> node src/server.js
+
+MongoDB connected
+Server running on http://localhost:5055
+[0mPOST /api/auth/register [32m201[0m 582.308 ms - 331[0m
+[0mPOST /api/auth/login [32m200[0m 528.230 ms - 331[0m
+[0mPOST /api/auth/forgot-password [32m200[0m 20.668 ms - 63[0m
+[0mPOST /api/auth/login [32m200[0m 561.540 ms - 331[0m
+[0mPOST /api/quiz/generate [32m201[0m 51.332 ms - 214[0m
+[0mGET /api/health [32m200[0m 1.954 ms - 15[0m

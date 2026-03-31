@@ -1,0 +1,36 @@
+
+> quiz-app-backend@1.0.0 start
+> node src/server.js
+
+MongoDB connected
+Server running on http://localhost:5000
+[0mGET /api/health [32m200[0m 6.593 ms - 15[0m
+[0mGET /api/health [32m200[0m 1.545 ms - 15[0m
+[0mPOST /api/auth/login [33m401[0m 6.123 ms - 33[0m
+[0mPOST /api/auth/register [32m201[0m 646.564 ms - 301[0m
+[0mGET /api/quiz/list [32m200[0m 10.763 ms - 606[0m
+[0mPOST /api/auth/login [32m200[0m 280.957 ms - 301[0m
+[0mPOST /api/auth/login [33m401[0m 4.556 ms - 33[0m
+[0mPOST /api/auth/register [32m201[0m 631.073 ms - 306[0m
+[0mPOST /api/auth/register [32m201[0m 334.781 ms - 301[0m
+[0mPOST /api/auth/login [32m200[0m 353.541 ms - 301[0m
+[0mPOST /api/auth/register [33m409[0m 9.591 ms - 37[0m
+[0mPOST /api/auth/login [32m200[0m 716.933 ms - 286[0m
+[0mGET /api/quiz/list [32m200[0m 25.470 ms - 606[0m
+[0mGET /api/quiz/leaderboard [32m200[0m 24.628 ms - 618[0m
+[0mGET /api/quiz/list [36m304[0m 13.577 ms - -[0m
+[0mGET /api/quiz/leaderboard [36m304[0m 14.882 ms - -[0m
+[0mGET /api/quiz/69c42b5de807f62f71a23360 [32m200[0m 36.342 ms - 3106[0m
+[0mGET /api/quiz/69c42b5de807f62f71a23360 [36m304[0m 19.211 ms - -[0m
+[0mPOST /api/quiz/submit [32m200[0m 127.394 ms - 76[0m
+[0mGET /api/quiz/leaderboard [32m200[0m 14.711 ms - 619[0m
+[0mGET /api/quiz/list [36m304[0m 14.596 ms - -[0m
+[0mGET /api/quiz/leaderboard [36m304[0m 9.968 ms - -[0m
+[0mGET /api/quiz/list [36m304[0m 17.024 ms - -[0m
+[0mGET /api/quiz/69c42b5de807f62f71a23360 [36m304[0m 26.748 ms - -[0m
+[0mGET /api/quiz/69c42b5de807f62f71a23360 [36m304[0m 19.384 ms - -[0m
+[0mPOST /api/quiz/submit [32m200[0m 74.784 ms - 75[0m
+[0mGET /api/quiz/leaderboard [32m200[0m 11.269 ms - 619[0m
+[0mGET /api/quiz/list [36m304[0m 17.502 ms - -[0m
+[0mGET /api/quiz/leaderboard [36m304[0m 12.663 ms - -[0m
+[0mGET /api/quiz/list [36m304[0m 20.152 ms - -[0m

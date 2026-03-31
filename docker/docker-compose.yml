@@ -1,0 +1,46 @@
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: quizapp-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: quizapp
+    ports:
+      - '27017:27017'
+
+  backend:
+    build:
+      context: ../backend
+    container_name: quizapp-backend
+    restart: unless-stopped
+    env_file:
+      - ../backend/.env
+    environment:
+      MONGO_URI: mongodb://mongo:27017/quizapp
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongo
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  frontend:
+    image: node:20-alpine
+    container_name: quizapp-frontend
+    working_dir: /usr/src/app
+    volumes:
+      - ../frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      VITE_API_PROXY_TARGET: http://backend:5000
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    ports:
+      - '5173:5173'
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
