@@ -4,17 +4,13 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import QuizResult from '../models/QuizResult.js';
 import { isMailConfigured, sendPasswordResetEmail } from '../utils/mailer.js';
+import { isStrongPassword } from '../utils/passwordRules.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
 const JWT_EXPIRY = process.env.JWT_EXPIRY || '7d';
-const PASSWORD_RULE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
-function isStrongPassword(password) {
-  return PASSWORD_RULE.test(password);
 }
 
 export async function register(req, res) {

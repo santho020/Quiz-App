@@ -1,220 +1,232 @@
-# Neon Quiz Arena 🎮
+# BrainBuzz Quiz Arena
 
-A modern, gaming-style competitive quiz web application with real-time scoring, leaderboards, and timer-based challenges.
+BrainBuzz Quiz Arena is a full-stack quiz platform with a dark game-style UI, timed play, AI-generated questions, leaderboard tracking, profile stats, and Gmail-based password recovery.
 
-## Features
+## What It Does
 
-✅ **Authentication**
-- Register & Login with bcrypt-hashed passwords
-- JWT token-based sessions
-
-✅ **Quiz System**
-- 4 predefined quizzes (Science, History, Sports, Current Events)
-- 20 questions per quiz with 4 options each
-- 20-second countdown timer per question
-- Auto-advance to next question when time runs out
-
-✅ **Scoring System**
-- Correct answer: +10 points
-- Wrong answer: -5 points
-- Scores persist in database
-
-✅ **Leaderboard**
-- Top 50 global players ranked by score
-- Real-time score updates
-- Current user highlighted
-
-✅ **UI/UX**
-- Dark gaming theme with neon accents
-- Smooth transitions (Framer Motion)
-- Fully responsive design
-- Glowing effects and animations
+- Mission Selection with 4 quiz types:
+  - General Study
+  - Current Affairs
+  - Sports
+  - Mixed Quiz
+- AI-powered custom quiz generation from uploaded files
+- Timed gameplay with per-question countdown
+- Quiz review with correct and wrong answer highlighting
+- Player profile with score and answer-time statistics
+- Global leaderboard
+- Register, login, forgot password, and reset password flow
+- Dockerized backend, frontend, and MongoDB
 
 ## Tech Stack
 
-- **Frontend**: React (Vite) + Tailwind CSS + Framer Motion
-- **Backend**: Node.js + Express + MongoDB + Mongoose
-- **Authentication**: JWT + bcrypt
-- **DevOps**: Docker + Docker Compose
+- Frontend: React, Vite, Tailwind CSS, Framer Motion
+- Backend: Node.js, Express, MongoDB, Mongoose
+- Auth: JWT, bcrypt
+- Mail: Nodemailer with Gmail SMTP
+- AI: Ollama locally for quiz generation
+- DevOps: Docker, Docker Compose, GitHub Actions
 
-## Quick Start
+## Project Structure
 
-### Prerequisites
-- Node.js 20+
-- MongoDB (local or Docker)
-- npm
-
-### Installation
-
-1. **Clone the repo** (if using git):
-```bash
-git clone <repo-url>
-cd quiz-app
+```text
+quiz-app/
+  backend/
+    src/
+      app.js
+      server.js
+      config/
+      controllers/
+      middleware/
+      models/
+      routes/
+      utils/
+    test/
+    Dockerfile
+    .env
+  frontend/
+    src/
+      App.jsx
+      main.jsx
+      components/
+      hooks/
+      pages/
+      utils/
+    test/
+  tests/
+    e2e/
+  docker-compose.yml
+  .github/workflows/ci-cd.yml
 ```
 
-2. **Install dependencies**:
-```bash
-# Backend
-cd backend
-npm install
-
-# Frontend
-cd ../frontend
-npm install
-```
-
-3. **Set up environment variables**:
-```bash
-# backend/.env
-cp .env.example .env
-# Edit .env and update MONGO_URI if needed
-```
-
-4. **Seed the database**:
-```bash
-cd backend
-npm run seed
-```
-
-### Running Locally
-
-**Terminal 1 - Backend**:
-```bash
-cd backend
-npm run dev
-# Runs on http://localhost:5000
-```
-
-**Terminal 2 - Frontend**:
-```bash
-cd frontend
-npm run dev
-# Runs on http://localhost:5173
-```
-
-3. **Open browser**: `http://localhost:5173`
-
-## API Endpoints
+## Features
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/profile` - Get current user profile (requires token)
 
-### Quiz
-- `GET /api/quiz/list` - Get all quizzes
-- `GET /api/quiz/:quizId` - Get quiz with questions
-- `POST /api/quiz/submit` - Submit quiz answers
-- `GET /api/quiz/leaderboard` - Get top 50 players
-- `GET /api/quiz/user-rank` - Get current user's rank
+- Register with unique username and Gmail
+- Login using username or Gmail
+- Password visibility toggle on login and register
+- Forgot password email reset flow
+- Reset password page with visible password option
 
-## Database Schema
+### Quiz Modules
 
-**Users**
-- username (unique)
-- password (hashed)
-- score
-- quizzesCompleted
+- Mission Selection: play the 4 main quiz categories
+- Customize: upload files and generate a quiz from extracted content
+- Leaderboard: view top player scores
+- Profile: view username, email, score, quizzes completed, average score, and average answer time
 
-**Quizzes**
-- title
-- category (Subject, History, Sports, Current Events, Mixed)
-- questionCount
-- isCustom
+### Gameplay
 
-**Questions**
-- quizId (reference to Quiz)
-- text
-- options (array of 4)
-- correctOptionIndex
-- order
+- AI-generated questions
+- Option order is shuffled so the correct answer is not always in the same position
+- Questions do not repeat in the same session easily because generation uses variation and history checks
+- Timer ends the quiz when the final answer is selected
+- Final review shows correct answers in green and wrong answers in red
 
-**QuizResults**
-- userId (reference to User)
-- quizId (reference to Quiz)
-- answers (array with selectedOptionIndex, isCorrect, points)
-- totalScore
-- correctCount
-- wrongCount
-- timeTaken
+## Local Setup
 
-## Docker Deployment
+### Prerequisites
+
+- Node.js 20+
+- npm
+- Docker Desktop
+- MongoDB if you want to run outside Docker
+- Ollama installed locally if you want AI generation
+
+### Run With Docker
+
+From the repo root:
 
 ```bash
-cd docker
-docker-compose up -d
+docker compose -f docker-compose.yml up --build -d
 ```
 
-This will start:
-- Backend on `http://localhost:5000`
+This starts:
+
 - Frontend on `http://localhost:5173`
+- Backend on `http://localhost:5000`
 - MongoDB on `mongodb://localhost:27017`
 
-## File Structure
+To stop everything:
 
+```bash
+docker compose -f docker-compose.yml down
 ```
-quiz-app/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/      # Business logic
-│   │   ├── models/           # Mongoose schemas
-│   │   ├── routes/           # API routes
-│   │   ├── middleware/       # Auth middleware
-│   │   ├── config/           # Database config
-│   │   ├── utils/            # Helpers & seeders
-│   │   ├── app.js            # Express setup
-│   │   └── server.js         # Server entry
-│   ├── package.json
-│   ├── Dockerfile
-│   └── .env.example
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/       # React components
-│   │   ├── pages/            # Page-level components
-│   │   ├── hooks/            # Custom hooks
-│   │   ├── utils/            # API helpers
-│   │   ├── contexts/         # React contexts
-│   │   ├── styles/           # Global styles
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   ├── vite.config.js
-│   ├── tailwind.config.js
-│   └── index.html
-│
-└── docker/
-    └── docker-compose.yml
+
+### Run Without Docker
+
+Backend:
+
+```bash
+cd backend
+npm install
+npm run dev
 ```
+
+Frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Environment Variables
+
+Set these in `backend/.env`:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://mongo:27017/quizapp
+JWT_SECRET=your_secret
+JWT_EXPIRY=7d
+FRONTEND_URL=http://localhost:5173
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-2.5-flash
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4.1-mini
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=yourgmail@gmail.com
+SMTP_PASS=your_gmail_app_password
+MAIL_FROM=yourgmail@gmail.com
+```
+
+If you are using Docker, the backend container connects to the Docker Mongo service automatically.
 
 ## Testing
 
-1. Register: Username + Password
-2. Select a quiz from the list
-3. Answer questions (timer ticks down)
-4. View your score and stats
-5. Check global leaderboard
+### Unit Tests
 
-## Next Steps
+Run from the repo root:
 
-- [ ] Custom quiz generation from PDF/DOCX
-- [ ] Achievements & badges
-- [ ] Social features (challenge friends)
-- [ ] Quiz history & analytics
-- [ ] Mobile app
-- [ ] WebSocket for real-time multiplayer
+```bash
+npm run test:backend
+npm run test:frontend
+```
+
+### Selenium E2E
+
+Install Python dependencies:
+
+```bash
+python -m pip install -r tests/e2e/requirements.txt
+```
+
+Run the smoke test:
+
+```bash
+npm run test:e2e
+```
+
+The Selenium test expects the Docker stack to be running locally.
+
+## GitHub CI/CD
+
+The workflow in [`.github/workflows/ci-cd.yml`](/c:/Users/ADMIN/Pictures/Quiz-app/.github/workflows/ci-cd.yml) is designed to run this pipeline:
+
+1. Backend unit tests
+2. Frontend unit tests and build
+3. Docker image build
+4. Selenium E2E smoke test
+5. Deploy stage placeholder for your Docker host
+
+To make deployment real, replace the placeholder deploy step with your actual target, such as:
+
+- SSH into a Docker VPS and run `docker compose up -d`
+- Push images to Docker Hub or GHCR and pull them on the server
+
+## API Overview
+
+### Auth
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/forgot-password`
+- `POST /api/auth/reset-password/:token`
+- `GET /api/auth/profile`
+
+### Quiz
+
+- `GET /api/quiz/list`
+- `GET /api/quiz/:quizId`
+- `POST /api/quiz/generate`
+- `POST /api/quiz/generate-from-files`
+- `POST /api/quiz/submit`
+- `GET /api/quiz/leaderboard`
+- `GET /api/quiz/user-rank`
+
+## Notes
+
+- The old local MongoDB users were migrated into Docker MongoDB so existing accounts continue to work.
+- The app uses Gmail SMTP for password reset emails, so make sure the Gmail app password is valid.
+- Ollama runs locally and is used for AI quiz generation without a paid API.
 
 ## Contributing
 
-1. Create a branch: `git checkout -b feature/your-feature`
-2. Commit changes: `git commit -m "Add feature"`
-3. Push: `git push origin feature/your-feature`
-4. Open a Pull Request
+1. Create a branch
+2. Make your changes
+3. Run tests
+4. Commit and push
+5. Open a pull request
 
-## License
-
-MIT
-
----
-
-**Happy Quizzing!** 🎉

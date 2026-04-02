@@ -1,4 +1,11 @@
 {
+  "private": true,
+  "scripts": {
+    "test:backend": "npm --prefix backend test",
+    "test:frontend": "npm --prefix frontend test",
+    "test:e2e": "python tests/e2e/selenium_smoke.py",
+    "test:all": "npm run test:backend && npm run test:frontend"
+  },
   "dependencies": {
     "minimatch": "^10.2.5",
     "multer": "^2.1.1",
